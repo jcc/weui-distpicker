@@ -2,15 +2,15 @@
   "name": "weui-distpicker",
   "version": "0.1.0",
   "description": "A flexible, highly available district selector for picking provinces, cities and districts of China base on weui.js.",
-  "private": true,
+  "author": "jcc <changejian@gmail.com>",
+  "repository": "jcc/weui-distpicker",
   "main": "dist/weui-distpicker.js",
+  "license": "MIT",
   "keywords": [
     "weui",
     "weui.js",
     "distpicker"
   ],
-  "author": "jcc <changejian@gmail.com>",
-  "license": "MIT",
   "files": [
     "src",
     "dist/*.js"
