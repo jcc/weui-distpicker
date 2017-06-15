@@ -11,7 +11,7 @@ export default {
     province: { type: [String, Number], default: 110000 },
     city: { type: [String, Number], default: 110100 },
     area: { type: [String, Number], default: 110101 },
-    className: { type: String, default: null },
+    className: { type: String, default: 'weui-picker-'+Math.random().toString(36).substr(5) },
     onlyProvince: { type: Boolean, default: false },
     hideArea: { type: Boolean, default: false },
     cache: { type: Boolean, default: true }
@@ -27,31 +27,35 @@ export default {
     }
   },
   mounted() {
-    let that = this
-    this.calculateDepth()
-
-    let picker = weui.picker(that.formatDistricts(), {
-      depth: that.depth,
-      defaultValue: that.defaultValue,
-      onChange: function (result) {
-        that.$emit('change', result)
-      },
-      onConfirm: function (result) {
-        that.$emit('confirm', result)
-      },
-      className: that.className,
-      id: that.id,
-    })
-
-    document.querySelector('.weui-mask').addEventListener('click', () => {
-      that.$emit('cancel')
-    })
-
-    document.querySelectorAll('[data-action="cancel"]')[0].addEventListener('click', () => {
-      that.$emit('cancel')
-    })
+    this.showPicker()
   },
   methods: {
+    showPicker() {
+      this.calculateDepth()
+
+      weui.picker(this.formatDistricts(), {
+        depth: this.depth,
+        defaultValue: this.defaultValue,
+        onChange: (result) => {
+          this.$emit('change', result)
+        },
+        onConfirm: (result) => {
+          this.$emit('confirm', result)
+        },
+        className: this.className,
+        id: this.id,
+      })
+
+      let picker = document.querySelector('.' + this.className)
+
+      picker.querySelector('.weui-mask').addEventListener('click', () => {
+        this.$emit('cancel')
+      })
+
+      picker.querySelector('[data-action="cancel"]').addEventListener('click', () => {
+        this.$emit('cancel')
+      })
+    },
     formatDistricts(code = DEFAULT_CODE, time = 1) {
       let districts = [];
       let list = this.getDistricts(code)
@@ -97,7 +101,7 @@ export default {
       }
     },
     checkHideArea(code) {
-      return this.hideArea && code.toString().substr(-2,2) == '00'
+      return this.hideArea && code.toString().substr(-2, 2) == '00'
     },
   }
 }
