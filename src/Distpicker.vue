@@ -14,7 +14,7 @@ export default {
     className: { type: String, default: 'weui-picker-'+Math.random().toString(36).substr(5) },
     onlyProvince: { type: Boolean, default: false },
     hideArea: { type: Boolean, default: false },
-    cache: { type: Boolean, default: true }
+    cache: { type: Boolean, default: false }
   },
   data() {
     return {
